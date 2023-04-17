@@ -24,7 +24,7 @@ class Board(fen: FENString) {
     init {
         var rank = 0
         var file = 0
-        for (char in fen.input) {
+        for (char in fen.value) {
             if (char.isDigit()) {
                 file = file.plus(char.digitToInt())
             } else if (char == '/') {
