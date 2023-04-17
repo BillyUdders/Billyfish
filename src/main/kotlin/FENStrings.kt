@@ -8,6 +8,19 @@ class FENString(val value: String) {
         if (ranks.size != 8) {
             throw FENException("Not enough ranks in FEN String for legal board.")
         }
+        for (rank in ranks) {
+            var length = 0
+            for (char in rank) {
+                if (char.isDigit()) {
+                    length = length.plus(char.digitToInt())
+                } else if (char.isLetter()) {
+                    length = length.inc()
+                }
+            }
+            if (length != 8) {
+                throw FENException("Rank length $length not legal.")
+            }
+        }
     }
 }
 
