@@ -18,13 +18,13 @@ data class Position(val column: Char, val row: Int) {
     }
 }
 
-class Board(fen: String = "") {
+class Board(fen: FENString) {
     private val state: Array<Array<Piece?>> = Array(8) { Array(8) { null } }
 
     init {
         var rank = 0
         var file = 0
-        for (char in fen) {
+        for (char in fen.input) {
             if (char.isDigit()) {
                 file = file.plus(char.digitToInt())
             } else if (char == '/') {
