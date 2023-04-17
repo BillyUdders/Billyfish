@@ -8,7 +8,7 @@ enum class PieceType {
 
 data class Piece(val type: PieceType, val color: Color) {
     companion object {
-        val FENMap: Map<Char, Piece> = hashMapOf(
+        val fromFEN: Map<Char, Piece> = hashMapOf(
             'P' to Piece(PieceType.PAWN, Color.WHITE),
             'N' to Piece(PieceType.KNIGHT, Color.WHITE),
             'B' to Piece(PieceType.BISHOP, Color.WHITE),
