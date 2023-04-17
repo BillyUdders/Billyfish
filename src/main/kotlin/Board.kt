@@ -1,4 +1,4 @@
-data class Position(val column: Char, val row: Int) {
+data class Position(val san: String) {
     private val columnMap = hashMapOf(
         'A' to 0, 'B' to 1,
         'C' to 2, 'D' to 3,
@@ -8,6 +8,12 @@ data class Position(val column: Char, val row: Int) {
     val coordinates: Pair<Int, Int>
 
     init {
+        if (san.length != 2) {
+            throw InvalidPositionException("SAN input not 2, length: ${san.length}")
+        }
+        val column = san[0].uppercaseChar()
+        val row = san[1].digitToInt()
+
         val rank = row - 1
         val file = columnMap[column]
         if (file != null && rank >= 1) {

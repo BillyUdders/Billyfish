@@ -4,6 +4,6 @@ fun main(args: Array<String>) {
 
     println("\n \n MOVING \n \n")
 
-    b.makeMove(Position('A', 2), Position('E', 3))
+    b.makeMove(Position("A2"), Position("E3"))
     b.printState()
 }
