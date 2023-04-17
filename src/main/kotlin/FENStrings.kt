@@ -12,9 +12,9 @@ class FENString(val value: String) {
             var length = 0
             for (char in rank) {
                 if (char.isDigit()) {
-                    length = length.plus(char.digitToInt())
+                    length += char.digitToInt()
                 } else if (char.isLetter()) {
-                    length = length.inc()
+                    length += 1
                 }
             }
             if (length != 8) {

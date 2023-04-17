@@ -26,13 +26,13 @@ class Board(fen: FENString) {
         var file = 0
         for (char in fen.value) {
             if (char.isDigit()) {
-                file = file.plus(char.digitToInt())
-            } else if (char == '/') {
-                rank = rank.inc()
-                file = 0
+                file += char.digitToInt()
             } else if (char.isLetter()) {
                 state[rank][file] = Piece.fromFEN[char]
-                file = file.inc()
+                file += 1
+            } else if (char == '/') {
+                rank += 1
+                file = 0
             }
         }
     }
