@@ -12,10 +12,10 @@ data class Position(val column: Char, val row: Int) {
     init {
         val col = columnMap[column]
         val ro = row - 1
-        if (col != null && ro > 1) {
+        if (col != null && ro >= 1) {
             this.coordinates = Pair(col, ro)
         } else {
-            throw InvalidPropertiesFormatException("")
+            throw InvalidPropertiesFormatException("Row and column not valid: $col, $ro")
         }
     }
 }
@@ -45,10 +45,11 @@ class Board(fen: String = "") {
         val sourcePiece = state[x][y]
         val destPiece = state[x1][y1]
         if (sourcePiece != null && destPiece == null) {
-
+            state[x][y] = null
+            state[x1][y1] = sourcePiece
         } else {
             // FIXME Make proper exception, just a placeholder for now
-            throw InvalidPropertiesFormatException("")
+            throw InvalidPropertiesFormatException("Invalid move $sourcePiece -> $destPiece")
         }
     }
 
