@@ -1,4 +1,24 @@
-data class Position(val row: String, val column: String)
+import java.util.*
+
+data class Position(val column: Char, val row: Int) {
+    private val columnMap = hashMapOf(
+        'A' to 0, 'B' to 1,
+        'C' to 2, 'D' to 3,
+        'E' to 4, 'F' to 5,
+        'G' to 6, 'H' to 7
+    )
+    val coordinates: Pair<Int, Int>
+
+    init {
+        val col = columnMap[column]
+        val ro = row - 1
+        if (col != null && ro > 1) {
+            this.coordinates = Pair(col, ro)
+        } else {
+            throw InvalidPropertiesFormatException("")
+        }
+    }
+}
 
 class Board(fen: String = "") {
     private val state: Array<Array<Piece?>> = Array(8) { Array(8) { null } }
@@ -20,7 +40,16 @@ class Board(fen: String = "") {
     }
 
     fun makeMove(source: Position, destination: Position) {
+        val (x, y) = source.coordinates
+        val (x1, y1) = destination.coordinates
+        val sourcePiece = state[x][y]
+        val destPiece = state[x1][y1]
+        if (sourcePiece != null && destPiece == null) {
 
+        } else {
+            // FIXME Make proper exception, just a placeholder for now
+            throw InvalidPropertiesFormatException("")
+        }
     }
 
     fun printState() {
