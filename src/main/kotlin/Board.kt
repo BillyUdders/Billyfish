@@ -17,7 +17,10 @@ class Board(fen: FENString) {
         }
     }
 
-    fun makeMove(source: Position, destination: Position) {
+    fun makeMove(sourceInput: String, destInput: String) {
+        val source = Position(SAN(sourceInput))
+        val destination = Position(SAN(destInput))
+
         val (x, y) = source.coordinates
         val (x1, y1) = destination.coordinates
         val sourcePiece = state[x][y]
