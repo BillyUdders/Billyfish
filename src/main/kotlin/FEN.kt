@@ -8,9 +8,9 @@ class FENString(val value: String) {
         if (ranks.size != 8) {
             throw FENException("Not enough ranks in FEN String for legal board.")
         }
-        for (rank in ranks) {
+        for (file in ranks) {
             var length = 0
-            for (char in rank) {
+            for (char in file) {
                 if (char.isDigit()) {
                     length += char.digitToInt()
                 } else if (char.isLetter()) {

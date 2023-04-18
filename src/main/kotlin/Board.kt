@@ -25,7 +25,7 @@ data class Position(val san: String) {
 }
 
 class Board(fen: FENString) {
-    private val state: Array<Array<Piece?>> = Array(8) { Array(8) { null } }
+    val state: Array<Array<Piece?>> = Array(8) { Array(8) { null } }
 
     init {
         var rank = 0
@@ -54,9 +54,5 @@ class Board(fen: FENString) {
         } else {
             throw InvalidMoveException("$sourcePiece -> $destPiece")
         }
-    }
-
-    fun printState() {
-        for (row in state) println(row.contentToString())
     }
 }
