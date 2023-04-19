@@ -13,10 +13,10 @@ data class SAN(val input: String) {
 
 data class Position(val san: SAN) {
     private val columnMap = hashMapOf(
-        'A' to 0, 'B' to 1,
-        'C' to 2, 'D' to 3,
-        'E' to 4, 'F' to 5,
-        'G' to 6, 'H' to 7
+        'A' to 7, 'B' to 6,
+        'C' to 5, 'D' to 4,
+        'E' to 3, 'F' to 2,
+        'G' to 1, 'H' to 0
     )
     val coordinates: Pair<Int, Int>
 

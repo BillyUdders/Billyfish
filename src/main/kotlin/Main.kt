@@ -1,7 +1,7 @@
 fun main(args: Array<String>) {
     val b = Board(INITIAL_BOARD_FEN)
     printState(b)
-    b.makeMove("A2", "E3")
+    b.makeMove("A2", "C3")
     printState(b)
 }
 
