@@ -8,7 +8,7 @@ data class FENString(val value: String) {
     init {
         val ranks = value.split('/')
         if (ranks.size != 8) {
-            throw InputMismatchException("FEN not enough ranks in FEN String for legal board.")
+            throw InputMismatchException("FEN rank length ${ranks.size} not legal.")
         }
         for (file in ranks) {
             var length = 0
