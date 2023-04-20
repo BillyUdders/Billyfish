@@ -1,5 +1,7 @@
 import java.util.*
 
+typealias InputException = InputMismatchException
+
 data class FENString(val value: String) {
     companion object {
         val INITIAL_BOARD_FEN = FENString("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
@@ -8,7 +10,7 @@ data class FENString(val value: String) {
     init {
         val ranks = value.split('/')
         if (ranks.size != 8) {
-            throw InputMismatchException("FEN rank length ${ranks.size} not legal.")
+            throw InputException("FEN rank length ${ranks.size} not legal.")
         }
         for (file in ranks) {
             var length = 0
@@ -20,7 +22,7 @@ data class FENString(val value: String) {
                 }
             }
             if (length != 8) {
-                throw InputMismatchException("FEN file length $length not legal.")
+                throw InputException("FEN file length $length not legal.")
             }
         }
     }
@@ -32,7 +34,7 @@ data class SAN(val input: String) {
 
     init {
         if (input.length != 2) {
-            throw InputMismatchException("SAN length not 2, length: ${input.length}")
+            throw InputException("SAN length not 2, length: ${input.length}")
         }
         this.rank = input[1].digitToInt()
         this.file = input[0].uppercaseChar()
@@ -62,14 +64,14 @@ data class Position(val san: SAN) {
         if (file != null && rank >= 1) {
             this.coordinates = Pair(file, rank)
         } else {
-            throw InputMismatchException("Position invalid: $san -> $file, $rank")
+            throw InputException("Position invalid: $san -> $file, $rank")
         }
     }
 }
 
 data class Move(val piece: Piece, val sourcePosition: Position, val destPosition: Position) {
     constructor(piece: Char, sourceInput: String, destInput: String) : this(
-        Piece.fromFEN[piece] ?: throw InputMismatchException("Char not valid FEN"), Pos(sourceInput), Pos(destInput)
+        Piece.fromFEN[piece] ?: throw InputException("Char not valid FEN"), Pos(sourceInput), Pos(destInput)
     )
 }
 
