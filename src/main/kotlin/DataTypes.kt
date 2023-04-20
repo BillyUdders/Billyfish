@@ -67,6 +67,8 @@ data class Position(val san: SAN) {
     }
 }
 
+data class Move(val piece: Piece, val sourcePosition: Position, val destPosition: Position)
+
 data class Piece(val type: PieceType, val color: Color) {
 
     enum class Color {

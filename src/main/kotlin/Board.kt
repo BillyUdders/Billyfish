@@ -1,7 +1,7 @@
 typealias BoardState = Array<Array<Piece?>>
 
 class Board(fen: FENString) {
-    private val legalCalc: LegalMoveCalculator = LegalMoveCalculator()
+    private val moveCalc: MoveCalculator = MoveCalculator()
 
     val state: BoardState = Array(8) { Array(8) { null } }
 
@@ -21,20 +21,24 @@ class Board(fen: FENString) {
         }
     }
 
-    fun makeMove(sourceInput: String, destInput: String): Pair<Pos, Pos>? {
+    fun makeMove(sourceInput: String, destInput: String): Move? {
         val source = Pos(sourceInput)
         val destination = Pos(destInput)
-        val legalMoves = legalCalc.getLegalMoves(this.state, source, destination)
 
         val (x, y) = source.coordinates
-        val (x1, y1) = destination.coordinates
         val sourcePiece = state[x][y]
-        val destPiece = state[x1][y1]
-        val move = source to destination
-        if (sourcePiece != null && destPiece == null && move in legalMoves) {
-            state[x][y] = null
-            state[x1][y1] = sourcePiece
-            return move
+
+        sourcePiece?.let { piece ->
+            println(piece)
+            val move = Move(piece, source, destination)
+            val legalMoves = moveCalc.getLegalMoves(this.state)
+
+            if (move in legalMoves) {
+                val (x1, y1) = move.destPosition.coordinates
+                state[x][y] = null
+                state[x1][y1] = piece
+                return move
+            }
         }
         return null
     }
