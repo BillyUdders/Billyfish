@@ -31,7 +31,6 @@ class Board(fen: FENString) {
         sourcePiece?.let { piece ->
             val move = Move(piece, source, destination)
             val legalMoves = moveCalc.getLegalMoves(this.state)
-
             if (move in legalMoves) {
                 val (x1, y1) = move.destPosition.coordinates
                 state[x1][y1] = move.piece

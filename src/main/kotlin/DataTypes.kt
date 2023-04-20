@@ -1,4 +1,4 @@
-import java.util.InputMismatchException
+import java.util.*
 
 data class FENString(val value: String) {
     companion object {
@@ -45,7 +45,7 @@ data class Position(val san: SAN) {
 
     // Secondary constructor helps keep typing down by wrapping SAN creation,
     // letting user just pass a string but we still make a SAN to parse input string.
-    constructor(input: String): this(SAN(input))
+    constructor(input: String) : this(SAN(input))
 
     private val columnMap = hashMapOf(
         'A' to 7, 'B' to 6,
@@ -67,9 +67,13 @@ data class Position(val san: SAN) {
     }
 }
 
-data class Move(val piece: Piece, val sourcePosition: Position, val destPosition: Position)
+data class Move(val piece: Piece, val sourcePosition: Position, val destPosition: Position) {
+    constructor(piece: Char, sourceInput: String, destInput: String) : this(
+        Piece.fromFEN[piece] ?: throw InputMismatchException("Char not valid FEN"), Pos(sourceInput), Pos(destInput)
+    )
+}
 
-data class Piece(val type: PieceType, val color: Color) {
+data class Piece(val type: PieceType, val color: Color, val char: Char) {
 
     enum class Color {
         WHITE, BLACK
@@ -81,18 +85,18 @@ data class Piece(val type: PieceType, val color: Color) {
 
     companion object {
         val fromFEN: Map<Char, Piece> = hashMapOf(
-            'P' to Piece(PieceType.PAWN, Color.WHITE),
-            'N' to Piece(PieceType.KNIGHT, Color.WHITE),
-            'B' to Piece(PieceType.BISHOP, Color.WHITE),
-            'R' to Piece(PieceType.ROOK, Color.WHITE),
-            'Q' to Piece(PieceType.QUEEN, Color.WHITE),
-            'K' to Piece(PieceType.KING, Color.WHITE),
-            'p' to Piece(PieceType.PAWN, Color.BLACK),
-            'n' to Piece(PieceType.KNIGHT, Color.BLACK),
-            'b' to Piece(PieceType.BISHOP, Color.BLACK),
-            'r' to Piece(PieceType.ROOK, Color.BLACK),
-            'q' to Piece(PieceType.QUEEN, Color.BLACK),
-            'k' to Piece(PieceType.KING, Color.BLACK),
+            'P' to Piece(PieceType.PAWN, Color.WHITE, 'P'),
+            'N' to Piece(PieceType.KNIGHT, Color.WHITE, 'N'),
+            'B' to Piece(PieceType.BISHOP, Color.WHITE, 'B'),
+            'R' to Piece(PieceType.ROOK, Color.WHITE, 'R'),
+            'Q' to Piece(PieceType.QUEEN, Color.WHITE, 'Q'),
+            'K' to Piece(PieceType.KING, Color.WHITE, 'K'),
+            'p' to Piece(PieceType.PAWN, Color.BLACK, 'p'),
+            'n' to Piece(PieceType.KNIGHT, Color.BLACK, 'n'),
+            'b' to Piece(PieceType.BISHOP, Color.BLACK, 'b'),
+            'r' to Piece(PieceType.ROOK, Color.BLACK, 'r'),
+            'q' to Piece(PieceType.QUEEN, Color.BLACK, 'q'),
+            'k' to Piece(PieceType.KING, Color.BLACK, 'k'),
         )
     }
 }
