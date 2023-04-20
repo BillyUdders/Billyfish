@@ -1,3 +1,5 @@
+import java.util.InputMismatchException
+
 data class FENString(val value: String) {
     companion object {
         val INITIAL_BOARD_FEN = FENString("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
@@ -6,7 +8,7 @@ data class FENString(val value: String) {
     init {
         val ranks = value.split('/')
         if (ranks.size != 8) {
-            throw FENException("Not enough ranks in FEN String for legal board.")
+            throw InputMismatchException("FEN not enough ranks in FEN String for legal board.")
         }
         for (file in ranks) {
             var length = 0
@@ -18,7 +20,7 @@ data class FENString(val value: String) {
                 }
             }
             if (length != 8) {
-                throw FENException("Rank length $length not legal.")
+                throw InputMismatchException("FEN file length $length not legal.")
             }
         }
     }
@@ -30,15 +32,19 @@ data class SAN(val input: String) {
 
     init {
         if (input.length != 2) {
-            throw InvalidPositionException("SAN input not 2, length: ${input.length}")
+            throw InputMismatchException("SAN length not 2, length: ${input.length}")
         }
         this.rank = input[1].digitToInt()
         this.file = input[0].uppercaseChar()
     }
 }
 
+typealias Pos = Position
+
 data class Position(val san: SAN) {
 
+    // Secondary constructor helps keep typing down by wrapping SAN creation,
+    // letting user just pass a string but we still make a SAN to parse input string.
     constructor(input: String): this(SAN(input))
 
     private val columnMap = hashMapOf(
@@ -56,7 +62,7 @@ data class Position(val san: SAN) {
         if (file != null && rank >= 1) {
             this.coordinates = Pair(file, rank)
         } else {
-            throw InvalidPositionException("$san -> $file, $rank")
+            throw InputMismatchException("Position invalid: $san -> $file, $rank")
         }
     }
 }
