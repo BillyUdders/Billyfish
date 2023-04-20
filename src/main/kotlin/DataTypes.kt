@@ -38,12 +38,16 @@ data class SAN(val input: String) {
 }
 
 data class Position(val san: SAN) {
+
+    constructor(input: String): this(SAN(input))
+
     private val columnMap = hashMapOf(
         'A' to 7, 'B' to 6,
         'C' to 5, 'D' to 4,
         'E' to 3, 'F' to 2,
         'G' to 1, 'H' to 0
     )
+
     val coordinates: Pair<Int, Int>
 
     init {
