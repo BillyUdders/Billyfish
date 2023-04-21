@@ -45,19 +45,19 @@ class Board(fen: FENString) {
     }
 
     fun generateFEN() = FENString(
-        this.state.fold(StringBuilder()) { acc, row ->
+        this.state.fold(StringBuilder()) { sb, row ->
             row.forEach { piece ->
                 if (piece != null) {
-                    acc.append(piece.char)
-                } else if (acc.last().isDigit()) {
-                    val s = "${acc.dropLast(1)}${acc.last().digitToInt() + 1}"
-                    acc.clear()
-                    acc.append(s)
+                    sb.append(piece.char)
+                } else if (sb.last().isDigit()) {
+                    val s = "${sb.dropLast(1)}${sb.last().digitToInt() + 1}"
+                    sb.clear()
+                    sb.append(s)
                 } else {
-                    acc.append("1")
+                    sb.append("1")
                 }
             }
-            acc.append("/")
+            sb.append("/")
         }.toString().dropLast(1)
     )
 
