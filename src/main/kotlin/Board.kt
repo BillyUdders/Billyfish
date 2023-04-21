@@ -40,25 +40,25 @@ class Board(fen: FENString) {
                 return move
             }
         }
+
         return null
     }
 
-    fun generateFEN(): FENString {
-        var acc = ""
-        this.state.forEach { row ->
+    fun generateFEN() = FENString(
+        this.state.fold(StringBuilder()) { acc, row ->
             row.forEach { piece ->
                 if (piece != null) {
-                    acc += piece.char
+                    acc.append(piece.char)
                 } else if (acc.last().isDigit()) {
-                    acc = "${acc.dropLast(1)}${acc.last().digitToInt() + 1}"
+                    val s = "${acc.dropLast(1)}${acc.last().digitToInt() + 1}"
+                    acc.clear()
+                    acc.append(s)
                 } else {
-                    acc += "1"
+                    acc.append("1")
                 }
             }
-            acc += "/"
-        }
-
-        return FENString(acc.dropLast(1))
-    }
+            acc.append("/")
+        }.toString().dropLast(1)
+    )
 
 }
