@@ -45,8 +45,6 @@ typealias Pos = Position
 
 data class Position(val san: SAN) {
 
-    // Secondary constructor helps keep typing down by wrapping SAN creation,
-    // letting user just pass a string but we still make a SAN to parse input string.
     constructor(input: String) : this(SAN(input))
 
     private val columnMap = hashMapOf(
@@ -69,11 +67,7 @@ data class Position(val san: SAN) {
     }
 }
 
-data class Move(val piece: Piece, val sourcePosition: Position, val destPosition: Position) {
-    constructor(piece: Char, sourceInput: String, destInput: String) : this(
-        Piece.fromFEN[piece] ?: throw InputException("Char not valid FEN"), Pos(sourceInput), Pos(destInput)
-    )
-}
+data class Move(val piece: Piece, val sourcePosition: Position, val destPosition: Position)
 
 data class Piece(val type: PieceType, val color: Color, val char: Char) {
 

@@ -1,8 +1,10 @@
 fun main(args: Array<String>) {
     val b = Board(FENString.INITIAL_BOARD_FEN)
     printState(b)
-    b.makeMove("A2", "C3")
+    b.makeMove(Piece.Color.WHITE, "A2", "C3")
     printState(b)
+    println("\n \nPRINTING FEN:\n \n")
+    println(b.generateFEN())
 }
 
 private fun printState(b: Board) {
