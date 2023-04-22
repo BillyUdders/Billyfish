@@ -1,7 +1,3 @@
-import java.util.*
-
-typealias InputException = InputMismatchException
-
 data class FENString(val value: String) {
     companion object {
         val INITIAL_BOARD_FEN = FENString("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
@@ -9,9 +5,7 @@ data class FENString(val value: String) {
 
     init {
         val ranks = value.split('/')
-        if (ranks.size != 8) {
-            throw InputException("FEN rank length ${ranks.size} not legal.")
-        }
+        require(ranks.size == 8) { "FEN ($value) rank length ${ranks.size} not legal." }
         for (file in ranks) {
             var length = 0
             for (char in file) {
@@ -21,9 +15,7 @@ data class FENString(val value: String) {
                     length += 1
                 }
             }
-            if (length != 8) {
-                throw InputException("FEN file length $length not legal.")
-            }
+            require(length == 8) { "FEN file length $length not legal." }
         }
     }
 }
@@ -33,9 +25,7 @@ data class SAN(val input: String) {
     val file: Char
 
     init {
-        if (input.length != 2) {
-            throw InputException("SAN length not 2, length: ${input.length}")
-        }
+        require(input.length == 2) { "SAN length not 2, length: ${input.length}" }
         this.rank = input[1].digitToInt()
         this.file = input[0].uppercaseChar()
     }
@@ -59,11 +49,8 @@ data class Position(val san: SAN) {
     init {
         val rank = san.rank - 1
         val file = columnMap[san.file]
-        if (file != null && rank >= 1) {
-            this.coordinates = Pair(file, rank)
-        } else {
-            throw InputException("Position invalid: $san -> $file, $rank")
-        }
+        require(file != null && rank >= 1) { "Position invalid: $san -> $file, $rank" }
+        this.coordinates = Pair(file, rank)
     }
 }
 
