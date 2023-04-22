@@ -28,20 +28,14 @@ class Board(fen: FENString) {
         val (startX, startY) = source.coordinates
         val sourcePiece = state[startX][startY]
 
-        sourcePiece?.let { piece ->
+        return sourcePiece?.let { piece ->
             val move = Move(piece, source, destination)
             val legalMoves = moveCalc.getLegalMoves(this.generateFEN(), side)
-            if (move in legalMoves) {
-                val (destX, destY) = move.destPosition.coordinates
-
-                state[startX][startY] = null
-                state[destX][destY] = move.piece
-
-                return move
+            when (move) {
+                in legalMoves -> doMove(move, startX, startY)
+                else -> null
             }
         }
-
-        return null
     }
 
     fun generateFEN() = FENString(
@@ -60,5 +54,12 @@ class Board(fen: FENString) {
             sb.append("/")
         }.toString().dropLast(1)
     )
+
+    private fun doMove(move: Move, startX: Int, startY: Int): Move {
+        val (destX, destY) = move.destPosition.coordinates
+        state[startX][startY] = null
+        state[destX][destY] = move.piece
+        return move
+    }
 
 }
