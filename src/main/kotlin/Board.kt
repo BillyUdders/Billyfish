@@ -31,10 +31,7 @@ class Board(fen: FENString) {
         return sourcePiece?.let { piece ->
             val move = Move(piece, source, destination)
             val legalMoves = moveCalc.getLegalMoves(this.generateFEN(), side)
-            when (move) {
-                in legalMoves -> doMove(move, startX, startY)
-                else -> null
-            }
+            if (move in legalMoves) doMove(move, startX, startY) else null
         }
     }
 
